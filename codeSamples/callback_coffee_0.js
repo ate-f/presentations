@@ -7,7 +7,7 @@ try {
   getOptions();
   order("black");
   order("cappuccino");
-  order("frappucino");
+  order("frappuccino");
   countMoney();
 } catch (e) {
   print(e, 'red');

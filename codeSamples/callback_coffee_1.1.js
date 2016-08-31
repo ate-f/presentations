@@ -6,7 +6,7 @@ countMoney();
 getOptions();
 order("black", receive);
 order("cappuccino", receive);
-order("frappucino", receive);
+order("frappuccino", receive);
 
 function receive(error, coffee, type){
   if(error){

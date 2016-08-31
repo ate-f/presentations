@@ -30,7 +30,7 @@ require(["dojo/Deferred"],function(Deferred){
   })
   
   cappuccinoReceived.then(function(){
-    order("frappucino", function(error, coffee, type){
+    order("frappuccino", function(error, coffee, type){
       if(error){
         return frappuccinoReceived.reject(error);
       }

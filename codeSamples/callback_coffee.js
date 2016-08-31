@@ -4,11 +4,11 @@ var money = '10.0';
 countMoney();
 order('black');
 order('cappuccino');
-order('frappucino');
+order('frappuccino');
 
 
 
-/*order("frappucino", (error, value) => {
+/*order("frappuccino", (error, value) => {
   if (error) {
     return console.error(error);    
   }

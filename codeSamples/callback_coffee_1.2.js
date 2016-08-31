@@ -9,7 +9,7 @@ order("black", function(error,coffee, type){
   receive(error, coffee, type);
   order("cappuccino", function(error, coffee, type){
     receive(error, coffee, type);
-    order("frappucino", receive);
+    order("frappuccino", receive);
   });
 });
 
