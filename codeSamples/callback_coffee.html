@@ -23,11 +23,18 @@
         return(false);
       }
     </script>
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js"
+            data-dojo-config="async: true"></script>
+
   </head>
   <body>
-    <h1>Codelog</h1>
-    <button onclick="load()" type="button" class="btn btn-primary">run</button>
-    <pre id="log"></pre>    
+    <div class="container">
+
+      <h1>Codelog <button onclick="load()" type="button" class="btn btn-primary">run</button></h1>
+      
+      <pre id="log" class="pre-scrollable" style="margin-top:10px;"></pre>    
+      
+    </div>
   </body>
   
 </html>

@@ -1,12 +1,17 @@
 /* eslint-disable */
-try {
+
   
 var money = 10.0;
-var coffeeTypes = {black: {price:2.5, time:1000}, cappucino: {price:4, time:2000}};
+var coffeeTypes = {black: {price:2.5, time:1000}, cappuccino: {price:4, time:2000}};
 
-countMoney();
-getOptions();
-order("black");
+try {
+  countMoney();
+  getOptions();
+  order("black");
+
+} catch (e) {
+  print(e, 'red');
+}
 
 function order(type) {
   print(`Ordering coffee: ${type}`);
@@ -21,16 +26,13 @@ function order(type) {
 function receive(coffee, type){
   print(`received coffee ${type}, paying ${coffee.price}`); 
   pay(coffee.price);
-  order('cappucino');
+  order('cappuccino');
   countMoney();
 }
 function pay(amount) {money = money - amount;}
 function countMoney() {print(`Money left ${money}`);}
 function getOptions() {print(`Options are: ${Object.keys(coffeeTypes).join(', ')}`);}
 
-} catch (e) {
-  print(e, 'red');
-}
 function print(text, color) {
   console.log(text);
   try{

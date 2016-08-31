@@ -2,35 +2,39 @@
 var money = 10.0;
 var coffeeTypes = {black: {price:2.5, time:1000}, cappuccino: {price:4, time:2000}};
 
-try {
-  countMoney();
-  getOptions();
-  order("black");
-  order("cappuccino");
-  order("frappucino");
-  countMoney();
-} catch (e) {
-  print(e, 'red');
-}
+countMoney();
+getOptions();
 
-function order(type) {
+order("black", function(error,coffee, type){
+  receive(error, coffee, type);
+  order("cappuccino", function(error, coffee, type){
+    receive(error, coffee, type);
+    order("frappucino", receive);
+  });
+});
+
+function receive(error, coffee, type){
+  if(error){
+    return print(error, 'red');
+  }
+  print(`received coffee ${type}, paying ${coffee.price}`); 
+  pay(coffee.price);
+  countMoney();
+}
+  
+function order(type, callback) {
   print(`Ordering coffee: ${type}`);
   var coffee = coffeeTypes[type];
   if (coffee) {
-    setTimeout(receive, coffee.time, coffee, type);
+    setTimeout(function(){callback(null, coffee, type);},coffee.time);       
   } else {
-    throw(`coffee '${type}' not available`);
+    setTimeout(function(){callback(`coffee '${type}' not available`);},2000);
   }
 }
 
-function receive(coffee, type){
-  print(`received coffee ${type}, paying ${coffee.price}`); 
-  pay(coffee.price);
-}
 function pay(amount) {money = money - amount;}
 function countMoney() {print(`Money left ${money}`);}
 function getOptions() {print(`Options are: ${Object.keys(coffeeTypes).join(', ')}`);}
-
 
 function print(text, color) {
   console.log(text);

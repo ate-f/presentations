@@ -1,13 +1,12 @@
 /* eslint-disable */
+
+  
 var money = 10.0;
 var coffeeTypes = {black: {price:2.5, time:1000}, cappuccino: {price:4, time:2000}};
-
-try {
+try{
   countMoney();
   getOptions();
   order("black");
-  order("cappuccino");
-  order("frappucino");
   countMoney();
 } catch (e) {
   print(e, 'red');
@@ -19,13 +18,17 @@ function order(type) {
   if (coffee) {
     setTimeout(receive, coffee.time, coffee, type);
   } else {
-    throw(`coffee '${type}' not available`);
+    setTimeout(function(){throw(`coffee '${type}' not available`);},2000);
   }
 }
 
 function receive(coffee, type){
   print(`received coffee ${type}, paying ${coffee.price}`); 
   pay(coffee.price);
+  if(type !== 'frappucino'){
+    order('frappucino');  
+  }
+  countMoney();
 }
 function pay(amount) {money = money - amount;}
 function countMoney() {print(`Money left ${money}`);}

@@ -3,7 +3,7 @@ var money = '10.0';
 
 countMoney();
 order('black');
-order('cappucino');
+order('cappuccino');
 order('frappucino');
 
 
@@ -28,7 +28,7 @@ function order(type){
 function order(type, callback) {
   if (type === "black") {
     setTimeout(() => callback(null, {price: 2.50}), 1000);
-  } else if(type === "cappucino"){
+  } else if(type === "cappuccino"){
     setTimeout(() => callback(null, {price: 4.00}), 2000);
   } else {
     callback(`coffee '${type}' not available`);
