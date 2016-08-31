@@ -7,9 +7,6 @@ var coffeeTypes = {black: {price:2.5, time:1000}, cappucino: {price:4, time:2000
 countMoney();
 getOptions();
 order("black");
-order("cappucino");
-order("frappucino");
-countMoney();
 
 function order(type) {
   print(`Ordering coffee: ${type}`);
@@ -24,6 +21,8 @@ function order(type) {
 function receive(coffee, type){
   print(`received coffee ${type}, paying ${coffee.price}`); 
   pay(coffee.price);
+  order('cappucino');
+  countMoney();
 }
 function pay(amount) {money = money - amount;}
 function countMoney() {print(`Money left ${money}`);}

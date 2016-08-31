@@ -6,11 +6,11 @@ var coffeeTypes = {black: {price:2.5, time:1000}, cappucino: {price:4, time:2000
 
 countMoney();
 getOptions();
-orderCoffee("black", receiveCoffee);
-orderCoffee("cappucino", receiveCoffee);
-countMoney();
+order("black", receive);
+order("cappucino", receive);
+order("frappucino", receive);
 
-function orderCoffee(type, callback) {
+function order(type, callback) {
   print(`Ordering coffee: ${type}`);
   var coffee = coffeeTypes[type];
   if (coffee) {
@@ -20,9 +20,10 @@ function orderCoffee(type, callback) {
   }
 }
 
-function receiveCoffee(error, coffee, type){
+function receive(error, coffee, type){
   print(`received coffee ${type}, paying ${coffee.price}`); 
   pay(coffee.price);
+  countMoney();
 }
 function pay(amount) {money = money - amount;}
 function countMoney() {print(`Money left ${money}`);}

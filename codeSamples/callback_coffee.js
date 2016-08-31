@@ -8,7 +8,7 @@ order('frappucino');
 
 
 
-/*orderCoffee("frappucino", (error, value) => {
+/*order("frappucino", (error, value) => {
   if (error) {
     return console.error(error);    
   }
@@ -16,7 +16,7 @@ order('frappucino');
 })*/
 
 function order(type){
-  orderCoffee(type, (error, value) => {
+  order(type, (error, value) => {
     if (error) {
       return console.error(error);    
     } 
@@ -25,7 +25,7 @@ function order(type){
   });
 }
 
-function orderCoffee(type, callback) {
+function order(type, callback) {
   if (type === "black") {
     setTimeout(() => callback(null, {price: 2.50}), 1000);
   } else if(type === "cappucino"){
