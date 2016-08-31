@@ -26,7 +26,7 @@ function getOptions() {print(`Options are: ${Object.keys(coffeeTypes).join(', ')
 function print(text){
   console.log(text);
   if(document){
-    var page = window.Document.getElementsById("log");
+    var page = window.document.getElementsById("log");
     page.innerHTML = div.innerHTML + text;
   }
 }
