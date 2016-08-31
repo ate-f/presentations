@@ -2,43 +2,22 @@
 var money = 10.0;
 var coffeeTypes = {black: {price:2.5, time:1000}, cappuccino: {price:4, time:2000}};
 require(["dojo/Deferred"], function(Deferred) {
+
   countMoney();
   getOptions();
 
-  var blackCoffeeReceived = new Deferred();
-  var cappuccinoReceived = new Deferred();
-  var frappuccinoReceived = new Deferred();
-
-  order("black").then(function(coffeeAndType) {    
-    receive(coffeeAndType.coffee, coffeeAndType.type);
-    blackCoffeeReceived.resolve();
-  }, function(error) {
-    return print(error, 'red');
-  });
-
-  blackCoffeeReceived.then(function() {
-    order("cappuccino").then(function(coffeeAndType) {
-      receive(coffeeAndType.coffee, coffeeAndType.type);
-      cappuccinoReceived.resolve();
-    });
-  }, function(error) {
-    return print(error, 'red');
-  });
-
-  cappuccinoReceived.then(function() {
-    order("frappuccino").then(function(coffeeAndType) {
-      receive(coffeeAndType.coffee, coffeeAndType.type);
-      frappuccinoReceived.resolve();
-    });
-  }, function(error) {
-    return print(error, 'red');
-  });
-
-  frappuccinoReceived.then(function() {
-    print('Done ordering', 'green');
-  }, function(error) {
-    return print(error, 'red');
-  });
+  order("black")    
+    .then(() => order("cappuccino"))
+    .then(() => order("frappuccino"))
+    .then(
+    null,
+    
+    error => {    
+      print('Catcing error','purple');
+      print(error, 'red');
+    })
+    .then(() => print('Done ordering', 'green'));
+  
 
   function receive(coffee, type) {
     print(`received coffee ${type}, paying ${coffee.price}`);
@@ -55,7 +34,7 @@ require(["dojo/Deferred"], function(Deferred) {
     } else {
       setTimeout(function() {orderDeferred.reject(`coffee '${type}' not available`);}, 2000);
     }
-    return orderDeferred;
+    return orderDeferred.then(coffeeAndType => receive(coffeeAndType.coffee, coffeeAndType.type));      
   }
 
   function pay(amount) {money = money - amount;}

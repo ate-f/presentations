@@ -2,42 +2,30 @@
 var money = 10.0;
 var coffeeTypes = {black: {price:2.5, time:1000}, cappuccino: {price:4, time:2000}};
 require(["dojo/Deferred"], function(Deferred) {
+
   countMoney();
   getOptions();
 
-  var blackCoffeeReceived = new Deferred();
-  var cappuccinoReceived = new Deferred();
-  var frappuccinoReceived = new Deferred();
-
-  order("black").then(function(coffeeAndType) {    
+  var coffeeReceived = new Deferred();
+  order("black").then(function(coffeeAndType) {
     receive(coffeeAndType.coffee, coffeeAndType.type);
-    blackCoffeeReceived.resolve();
-  }, function(error) {
-    return print(error, 'red');
-  });
-
-  blackCoffeeReceived.then(function() {
-    order("cappuccino").then(function(coffeeAndType) {
+    
+    return order("cappuccino").then(function(coffeeAndType) {
       receive(coffeeAndType.coffee, coffeeAndType.type);
-      cappuccinoReceived.resolve();
+      
+      return order("frappuccino").then(function(coffeeAndType) {
+        return receive(coffeeAndType.coffee, coffeeAndType.type);
+      });
     });
   }, function(error) {
-    return print(error, 'red');
+    coffeeReceived.reject(error);
   });
 
-  cappuccinoReceived.then(function() {
-    order("frappuccino").then(function(coffeeAndType) {
-      receive(coffeeAndType.coffee, coffeeAndType.type);
-      frappuccinoReceived.resolve();
-    });
-  }, function(error) {
-    return print(error, 'red');
-  });
-
-  frappuccinoReceived.then(function() {
+  coffeeReceived.then(function() {
     print('Done ordering', 'green');
-  }, function(error) {
-    return print(error, 'red');
+  }, function(error) {    
+    print('done ordering, but with error','green');
+    print(error, 'red');
   });
 
   function receive(coffee, type) {
@@ -71,4 +59,10 @@ require(["dojo/Deferred"], function(Deferred) {
       //silent
     }
   }
+
+  setTimeout(function(){
+    if(!(coffeeReceived.isRejected() || coffeeReceived.isResolved())){      
+      throw new Error("never received message that we can stop ordering");
+    }    
+  },8000);
 });

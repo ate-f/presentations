@@ -9,8 +9,13 @@
       function load(){
         var script = document.createElement('script');
         script.setAttribute('type', 'text/javascript');
-        script.setAttribute('src', file);
-        document.head.appendChild(script);
+        script.setAttribute('src', file);        
+        window.onerror = function(error){
+          console.log(error);
+          var div = document.getElementById('log')
+          div.innerHTML = `<span style='color: red'>${error}</span>`;
+        }
+        document.head.appendChild(script);  
       }
       function getQueryVariable(variable)
       {

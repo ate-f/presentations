@@ -39,7 +39,7 @@ require(["dojo/Deferred"], function(Deferred) {
   });
 
   frappuccinoReceived.then(function() {
-    print('done ordering');
+    print('Done ordering', 'green');
   }, function(error) {
     return print(error, 'red');
   });
