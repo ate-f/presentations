@@ -24,7 +24,7 @@ function countMoney() {print(`Money left ${money}`)}
 function getOptions() {print(`Options are: ${Object.keys(coffeeTypes).join(', ')}`);}
 
 function print(text){
-  console.log(text,document);
+  console.log(text, document, window);
   if(document){
     var page = document.getElementsById("log");
     page.innerHTML = div.innerHTML + text;
