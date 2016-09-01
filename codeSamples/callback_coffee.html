@@ -13,7 +13,7 @@
         window.addEventListener('error', function(error){
           console.log(error);
           var div = document.getElementById('log')
-          div.innerHTML = `<span style='color: red'>${error.message}</span>`;
+          div.innerHTML += `<br><span style='color: red; font-weight:bolder'>${error.message}</span><br><br>`;
         });        
         document.head.appendChild(script);  
       }

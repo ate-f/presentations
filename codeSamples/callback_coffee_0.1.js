@@ -4,14 +4,10 @@
 var money = 10.0;
 var coffeeTypes = {black: {price:2.5, time:1000}, cappuccino: {price:4, time:2000}};
 
-try {
-  countMoney();
-  getOptions();
-  order("black");
 
-} catch (e) {
-  print(e, 'red');
-}
+countMoney();
+getOptions();
+order("black");
 
 function order(type) {
   print(`Ordering coffee: ${type}`);
