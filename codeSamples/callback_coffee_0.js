@@ -12,11 +12,8 @@ countMoney();
 function order(type) {
   print(`Ordering coffee: ${type}`);
   var coffee = coffeeTypes[type];
-  if (coffee) {
-    setTimeout(receive, coffee.time, coffee, type);
-  } else {
-    throw(`coffee '${type}' not available`);
-  }
+  if (coffee) { setTimeout(receive, coffee.time, coffee, type); } 
+  else { throw(`coffee '${type}' not available`); }
 }
 
 function receive(coffee, type){

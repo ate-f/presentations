@@ -15,6 +15,18 @@ require(["dojo/Deferred"], function(Deferred) {
   }, function(error) {
     return print(error, 'red');
   });
+  
+  function order(type) {
+    var orderDeferred = new Deferred();
+    print(`Ordering coffee: ${type}`);
+    var coffee = coffeeTypes[type];
+    if (coffee) {
+      setTimeout(function() {orderDeferred.resolve({coffee:coffee, type:type});}, coffee.time);
+    } else {
+      setTimeout(function() {orderDeferred.reject(`coffee '${type}' not available`);}, 2000);
+    }
+    return orderDeferred;
+  }
 
   blackCoffeeReceived.then(function() {
     order("cappuccino").then(function(coffeeAndType) {
@@ -46,17 +58,7 @@ require(["dojo/Deferred"], function(Deferred) {
     countMoney();
   }
 
-  function order(type) {
-    var orderDeferred = new Deferred();
-    print(`Ordering coffee: ${type}`);
-    var coffee = coffeeTypes[type];
-    if (coffee) {
-      setTimeout(function() {orderDeferred.resolve({coffee:coffee, type:type});}, coffee.time);
-    } else {
-      setTimeout(function() {orderDeferred.reject(`coffee '${type}' not available`);}, 2000);
-    }
-    return orderDeferred;
-  }
+
 
   function pay(amount) {money = money - amount;}
   function countMoney() {print(`Money left ${money}`);}

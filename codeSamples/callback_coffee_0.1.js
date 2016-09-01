@@ -1,9 +1,6 @@
 /* eslint-disable */
-
-  
 var money = 10.0;
 var coffeeTypes = {black: {price:2.5, time:1000}, cappuccino: {price:4, time:2000}};
-
 
 countMoney();
 getOptions();
