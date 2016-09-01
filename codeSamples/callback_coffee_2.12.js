@@ -10,8 +10,7 @@ require(["dojo/Deferred"], function(Deferred) {
     .then(() => order("cappuccino"))
     .then(() => order("frappuccino"))
     .then(
-    null,
-    
+    null,    
     error => {    
       print('Catcing error','purple');
       print(error, 'red');

@@ -17,8 +17,13 @@ walkIntoShop()
   });
 
 function walkIntoShop(){    
-  return 'walking';
+  if(Math.random() >= 0.5){            
+    return 'running';
+  }  else {      
+    return new Promise(resolve => setTimeout(() => resolve('walking'),1000));
+  }     
 }
+
 
 function receive(coffee, type) {
   print(`Received coffee ${type}, paying ${coffee.price}`);
