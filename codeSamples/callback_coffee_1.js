@@ -10,7 +10,7 @@ order("black", function receive(error, coffee, type){
   if(error){
     return print(error, 'red');
   }
-  print(`received coffee ${type}, paying ${coffee.price}`); 
+  print(`Received coffee ${type}, paying ${coffee.price}`); 
   pay(coffee.price);
   countMoney();
 });

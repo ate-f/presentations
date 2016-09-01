@@ -17,7 +17,7 @@ require(["dojo/Deferred"], function(Deferred) {
       });
 
   function receive(coffee, type) {
-    print(`received coffee ${type}, paying ${coffee.price}`);
+    print(`Received coffee ${type}, paying ${coffee.price}`);
     pay(coffee.price);
     countMoney();
   }

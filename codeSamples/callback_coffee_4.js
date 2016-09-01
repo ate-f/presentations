@@ -5,31 +5,38 @@ var coffeeTypes = {black: {price:2.5, time:1000}, cappuccino: {price:4, time:200
 countMoney();
 getOptions();
 
-order("black", function(error,coffee, type){
-  receive(error, coffee, type);
-  order("cappuccino", function(error, coffee, type){
-    receive(error, coffee, type);
-    order("frappuccino", receive);
-  });
-});
+function *ordering(){
+  var c = yield order('black');
+  receive(c.coffee, c.type)
+  c = yield order('black');
+  receive(c.coffee, c.type)
+  c = yield order('frappucino');
+  receive(c.coffee, c.type)
+}
 
-function receive(error, coffee, type){
-  if(error){
-    return print(error, 'red');
-  }
-  print(`Received coffee ${type}, paying ${coffee.price}`); 
+var orderGenerator = ordering();
+console.log(orderGenerator.next());
+
+function receive(coffee, type) {
+  print(`Received coffee ${type}, paying ${coffee.price}`);
   pay(coffee.price);
   countMoney();
 }
-  
-function order(type, callback) {
+
+function order(type) {  
   print(`Ordering coffee: ${type}`);
   var coffee = coffeeTypes[type];
-  if (coffee) {
-    setTimeout(function(){callback(null, coffee, type);},coffee.time);       
+  if (coffee) {      
+    var res = {coffee:coffee, type:type};
+    setTimeout(function() {
+      orderGenerator.next(res);
+    }.bind(this), coffee.time);
   } else {
-    setTimeout(function(){callback(`coffee '${type}' not available`);},2000);
-  }
+    setTimeout(function() {
+      throw(`coffee '${type}' not available`)
+    },2000);
+  }    
+  
 }
 
 function pay(amount) {money = money - amount;}
@@ -38,10 +45,10 @@ function getOptions() {print(`Options are: ${Object.keys(coffeeTypes).join(', ')
 
 function print(text, color) {
   console.log(text);
-  try{
+  try {
     var page = document.getElementById("log");
     page.innerHTML = page.innerHTML + `<span style="color:${color || 'black'}">${text}</span>\n`;
-  } catch(e){
+  } catch (e) {
     //silent
   }
 }

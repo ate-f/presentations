@@ -10,11 +10,11 @@
         var script = document.createElement('script');
         script.setAttribute('type', 'text/javascript');
         script.setAttribute('src', file);        
-        window.onerror = function(error){
+        window.addEventListener('error', function(error){
           console.log(error);
           var div = document.getElementById('log')
-          div.innerHTML = `<span style='color: red'>${error}</span>`;
-        }
+          div.innerHTML = `<span style='color: red'>${error.message}</span>`;
+        });        
         document.head.appendChild(script);  
       }
       function getQueryVariable(variable)

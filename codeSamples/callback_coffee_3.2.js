@@ -5,15 +5,20 @@ require(["dojo/Deferred"], function(Deferred) {
 
   countMoney();
   getOptions();
+
   order("black")    
-    .then(() => order("cappuccino"))
+    .then(() => {
+      var a = new Deferred();
+      setTimeout(() => a.resolve(), 200);
+      return a.then(() => print("take some sugar"));
+    })
+    .then(() => order("cappuccino"))    
     .then(() => order("frappuccino"))    
-    .then(
-      () => print('Done ordering', 'green'), 
-      error => {    
-        print('done ordering, but with error','green');
-        print(error, 'red');
-      });
+    .then(() => print('Done ordering', 'green'))
+    .catch(error => {    
+      print('done ordering, but with error','green');
+      print(error, 'red');
+    });
 
   function receive(coffee, type) {
     print(`Received coffee ${type}, paying ${coffee.price}`);

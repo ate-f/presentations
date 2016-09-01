@@ -24,7 +24,7 @@ function order(type) {
 }
 
 function receive(coffee, type){
-  print(`received coffee ${type}, paying ${coffee.price}`); 
+  print(`Received coffee ${type}, paying ${coffee.price}`); 
   pay(coffee.price);
   order('cappuccino');
   countMoney();
